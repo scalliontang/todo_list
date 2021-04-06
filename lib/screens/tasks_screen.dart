@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:todo_list/models/task.dart';
 import 'package:todo_list/widgets/tasks_list.dart';
 import 'add_task_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_list/models/task_data.dart';
 
-class TasksScreen extends StatelessWidget {
+class TasksScreen extends StatefulWidget {
+
+  @override
+  _TasksScreenState createState() => _TasksScreenState();
+}
+
+class _TasksScreenState extends State<TasksScreen> {
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +25,12 @@ class TasksScreen extends StatelessWidget {
               builder: (context) => SingleChildScrollView(
                   child: Container(
                     padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
-                      child: AddTaskScreen(),
+                      child: AddTaskScreen((newTextTitle) {
+                        // setState(() {
+                        //   Provider.of<TaskData>(context).tasks.add(Task(name: newTextTitle));
+                        // });
+                        Navigator.pop(context);
+                      }),
                   ),
               ),
           );
@@ -54,7 +68,7 @@ class TasksScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  '12 Tasks',
+                  '${Provider.of<TaskData>(context).taskCount} Tasks',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
